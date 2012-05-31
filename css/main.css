@@ -1,0 +1,412 @@
+/* -------------------------------------------
+		GLOBAL
+----------------------------------------------  */
+
+a.button {
+	border-top: 1px solid #999;
+	background: #aaa;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ddd), to(#aaa));
+	background: -moz-linear-gradient(top, #ddd, #aaa);
+	background: -o-linear-gradient(top, #ddd, #aaa);
+	padding: 6px 15px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	-o-border-radius: 15px;
+	border-radius: 15px;
+	color: #444;
+	font-size: 12px;
+	font-family: Helvetica, Arial, Sans-Serif;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+a.button:hover {
+	border-top-color: #999;
+	background: #ccc;
+	color: #333;
+}
+
+a.button:active {
+	border-top-color: #888;
+	background: #bbb;
+}
+
+a.submit-button {
+	position: relative;
+	top: 5px;
+}
+
+a img {
+	border: none;
+}
+
+p {
+	padding: 10px;
+}
+
+p.error-text {
+	color: red;
+	font-style: italic;
+	font-size: 12px;
+	//visibility: hidden;
+}
+
+form {
+	padding: 10px 0;
+}
+
+input[type=text],
+input[type=password] {
+	width: 270px;
+}
+
+label {
+	font-size: 12px;
+}
+
+fieldset {
+    width: 400px;
+	margin: 1em 0px;
+	padding: 1em;
+	border: 1px solid #000;
+	position: relative;
+}
+
+/*
+fieldset p  {
+	margin: 2px 12px 10px 10px;
+}
+fieldset.login label, fieldset.register label, fieldset.changePassword label {
+	display: block;
+}
+
+fieldset label.inline {
+	display: inline;
+}
+*/
+
+legend {
+    font-size: 1.1em;
+	font-weight: 600;
+	padding: 2px 4px 8px 4px;    
+}
+
+/* -------------------------------------------
+		HEADER
+----------------------------------------------  */
+
+#header {
+	padding: 10px;
+	text-align: center;
+}
+
+#header h1, #header h2 {
+	font-family: 'Nunito', serif;
+	font-style: normal;
+  	font-weight: 700;
+	text-decoration: none;
+	text-transform: uppercase;
+	line-height: 1.2;
+}
+
+.star {
+	font-size: 75%;
+	position: relative;
+	bottom: 4px;
+	padding: 0 5px;
+}
+
+/* -------------------------------------------
+		CONTENT
+----------------------------------------------  */
+
+#content {
+	padding: 20px 10px;
+	text-align: center;
+}
+
+#content h1 {
+	font-size: 18px;
+	padding-bottom: 5px;
+}
+
+#welcome {
+	text-align: center;
+}
+
+#home {
+	text-align: center;
+}
+
+#register-form {
+	width: 300px;
+	margin: 0 auto;
+}
+
+/* -------------------------------------------
+		FOOTER
+----------------------------------------------  */
+
+#footer {
+	padding-bottom: 15px;
+    background: #eee;
+    width: 100%;
+    text-align: center;
+    border-top: solid 1px #ddd;
+}
+
+#footer p {
+    padding: 5px;
+	font-size: 10px;
+    color: #666;
+}
+
+#footer-links {
+	padding: 10px;
+}
+
+#footer-links a {
+	text-transform: uppercase;
+	color: #666;
+	font-size: 12px;
+	padding: 10px;
+}
+
+#footer-user {
+    text-align: left;
+}
+
+/* -------------------------------------------
+		LOGON
+----------------------------------------------  */
+#user-info {
+    padding: 5px;
+}
+
+/* -------------------------------------------
+		DASHBOARD
+----------------------------------------------  */
+#dashboardnav {
+    float:left;
+    width:20%;
+}
+
+#dashboarddetail {
+    float:left;
+    width:80%;
+}
+
+/* -------------------------------------------
+		ROLES
+----------------------------------------------  */
+
+#create-role {
+	position: relative;
+}
+#create-role input {
+	width: 466px;
+	font-size: 24px;
+	font-family: inherit;
+	line-height: 1.4em;
+	border: 0;
+	outline: none;
+	padding: 6px;
+	border: 1px solid #999999;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+}
+#create-role input::-webkit-input-placeholder {
+	font-style: italic;
+}
+#create-role span {
+	position: absolute;
+	z-index: 999;
+	width: 170px;
+	left: 50%;
+	margin-left: -85px;
+}
+
+#role-list {
+	margin-top: 10px;
+}
+#role-list li {
+	padding: 12px 20px 11px 0;
+	position: relative;
+	font-size: 24px;
+	line-height: 1.1em;
+	border-bottom: 1px solid #cccccc;
+}
+#role-list li:after {
+	content: "\0020";
+	display: block;
+	height: 0;
+	clear: both;
+	overflow: hidden;
+	visibility: hidden;
+}
+#role-list li.editing {
+	padding: 0;
+	border-bottom: 0;
+}
+#role-list .editing .display,
+#role-list .edit {
+	display: none;
+}
+#role-list .editing .edit {
+	display: block;
+}
+#role-list .editing input {
+	width: 444px;
+	font-size: 24px;
+	font-family: inherit;
+	margin: 0;
+	line-height: 1.6em;
+	border: 0;
+	outline: none;
+	padding: 10px 7px 0px 27px;
+	border: 1px solid #999999;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 1px 2px 0 inset;
+}
+#role-list .check {
+	position: relative;
+	top: 9px;
+	margin: 0 10px 0 7px;
+	float: left;
+}
+#role-list .done .role-content {
+	text-decoration: line-through;
+	color: #777777;
+}
+#role-list .role-destroy {
+	position: absolute;
+	right: 5px;
+	top: 14px;
+	display: none;
+	cursor: pointer;
+	width: 20px;
+	height: 20px;
+	background: url(../img/destroy.png) no-repeat 0 0;
+}
+#role-list li:hover .role-destroy {
+	display: block;
+}
+#role-list .role-destroy:hover {
+	background-position: 0 -20px;
+}
+
+#role-instructions {
+	width: 520px;
+	margin: 10px auto;
+	color: #777777;
+	text-shadow: rgba(255, 255, 255, 0.8) 0 1px 0;
+	text-align: center;
+}
+#role-instructions a {
+	color: #336699;
+}
+
+/*
+*  François 'cahnory' Germain
+*/
+.ui-tooltip, .ui-tooltip-top, .ui-tooltip-right, .ui-tooltip-bottom, .ui-tooltip-left {
+	color:#ffffff;
+	cursor:normal;
+	display:-moz-inline-stack;
+	display:inline-block;
+	font-size:12px;
+	font-family:arial;
+	padding:.5em 1em;
+	position:relative;
+	text-align:center;
+	text-shadow:0 -1px 1px #111111;
+	-webkit-border-top-left-radius:4px ;
+	-webkit-border-top-right-radius:4px ;
+	-webkit-border-bottom-right-radius:4px ;
+	-webkit-border-bottom-left-radius:4px ;
+	-khtml-border-top-left-radius:4px ;
+	-khtml-border-top-right-radius:4px ;
+	-khtml-border-bottom-right-radius:4px ;
+	-khtml-border-bottom-left-radius:4px ;
+	-moz-border-radius-topleft:4px ;
+	-moz-border-radius-topright:4px ;
+	-moz-border-radius-bottomright:4px ;
+	-moz-border-radius-bottomleft:4px ;
+	border-top-left-radius:4px ;
+	border-top-right-radius:4px ;
+	border-bottom-right-radius:4px ;
+	border-bottom-left-radius:4px ;
+	-o-box-shadow:0 1px 2px #000000, inset 0 0 0 1px #222222, inset 0 2px #666666, inset 0 -2px 2px #444444;
+	-moz-box-shadow:0 1px 2px #000000, inset 0 0 0 1px #222222, inset 0 2px #666666, inset 0 -2px 2px #444444;
+	-khtml-box-shadow:0 1px 2px #000000, inset 0 0 0 1px #222222, inset 0 2px #666666, inset 0 -2px 2px #444444;
+	-webkit-box-shadow:0 1px 2px #000000, inset 0 0 0 1px #222222, inset 0 2px #666666, inset 0 -2px 2px #444444;
+	box-shadow:0 1px 2px #000000, inset 0 0 0 1px #222222, inset 0 2px #666666, inset 0 -2px 2px #444444;
+	background-color:#3b3b3b;
+	background-image:-moz-linear-gradient(top,#555555,#222222);
+	background-image:-webkit-gradient(linear,left top,left bottom,color-stop(0,#555555),color-stop(1,#222222));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorStr=#555555,EndColorStr=#222222);
+	-ms-filter:progid:DXImageTransform.Microsoft.gradient(startColorStr=#555555,EndColorStr=#222222);
+}
+.ui-tooltip:after, .ui-tooltip-top:after, .ui-tooltip-right:after, .ui-tooltip-bottom:after, .ui-tooltip-left:after {
+	content:"\25B8";
+	display:block;
+	font-size:2em;
+	height:0;
+	line-height:0;
+	position:absolute;
+}
+.ui-tooltip:after, .ui-tooltip-bottom:after {
+	color:#2a2a2a;
+	bottom:0;
+	left:1px;
+	text-align:center;
+	text-shadow:1px 0 2px #000000;
+	-o-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	-khtml-transform:rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	width:100%;
+}
+.ui-tooltip-top:after {
+	bottom:auto;
+	color:#4f4f4f;
+	left:-2px;
+	top:0;
+	text-align:center;
+	text-shadow:none;
+	-o-transform:rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	-khtml-transform:rotate(-90deg);
+	-webkit-transform:rotate(-90deg);
+	width:100%;
+}
+.ui-tooltip-right:after {
+	color:#222222;
+	right:-0.375em;
+	top:50%;
+	margin-top:-.05em;
+	text-shadow:0 1px 2px #000000;
+	-o-transform:rotate(0);
+	-moz-transform:rotate(0);
+	-khtml-transform:rotate(0);
+	-webkit-transform:rotate(0);
+}
+.ui-tooltip-left:after {
+	color:#222222;
+	left:-0.375em;
+	top:50%;
+	margin-top:.1em;
+	text-shadow:0 -1px 2px #000000;
+	-o-transform:rotate(180deg);
+	-moz-transform:rotate(180deg);
+	-khtml-transform:rotate(180deg);
+	-webkit-transform:rotate(180deg);
+}
+
+/* new additions - cleanup required*/
+
+
