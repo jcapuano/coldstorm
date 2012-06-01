@@ -89,13 +89,16 @@ cai.RolesViewModel = function() {
     	cai.log("Role updated: " + role.Name);
         
         var foundrole = ko.utils.arrayFilter(self.Roles(), function(r) {
-	            return r.Name() === role.Name;
+	            return r.Id === role.Id;
                 });
 		if (foundrole && foundrole.length > 0)
         {
-        	foundrole[0].stopEditing();
-        }   
-        
+			foundrole[0].stopEditing();
+			// there is a better way to do this, but too lazy for now
+			foundrole[0].Name(role.Name);
+			foundrole[0].Description(role.Description);
+			foundrole[0].Active(role.Active);
+        }        
     }
     
     self.roleDeleted = function(id) {
