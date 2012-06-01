@@ -1,17 +1,22 @@
 var cai = cai || {};  
 
-cai.WebServer = function(port) {
+cai.WebServer = function(port, folder) {
 	var self = this;
     
-	self.Port = port;
+	self.Port = port || 8080;
+    self.Folder = folder || process.cwd();
     self.indexHtml = 'index.html';
     
-    this.start = function(port) {
+    this.start = function(port, folder) {
     	if (!port) port = self.Port;
         self.Port = port;
         
+        if (!folder) folder = self.Folder;
+        self.Folder = folder;
+    
     	console.log('Starting Web Server');
-
+    	console.log('Referencing resources from [' + self.Folder + ']');
+        
 		var http = require('http');
         var fs = require('fs');
         var path = require('path'); 
@@ -19,9 +24,10 @@ cai.WebServer = function(port) {
 		http.createServer(function (request, response) {     
 			console.log('request received: ' + request.url);         
 		    
-		    var filePath = '.' + request.url;    
-		    if (filePath == './')        
-		    filePath = './' + self.indexHtml;             
+		    var filePath = request.url;    
+		    if (filePath == '/')        
+            	filePath = '/' + self.indexHtml;             
+            filePath = self.Folder + filePath
 		    var extname = path.extname(filePath);    
 		    var contentType = 'text/html';    
 		    switch (extname) {        
@@ -61,8 +67,12 @@ cai.Main = function() {
 
 	try {
     	console.log('Creating Web Server');
+        var port = process.argv.length > 2 ? process.argv[2] : 8080;
+        var folder = process.argv.length > 3 ? process.argv[3] : process.cwd();
+    
 		var ws = new cai.WebServer();
-		ws.start(8080);
+        
+		ws.start(port, folder);
     } catch (ex) {
     	console.log('Error in creating Web Server: ' + ex);
     }

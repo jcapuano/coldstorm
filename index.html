@@ -124,7 +124,7 @@
                             <span class="role-destroy" data-bind="click: $root.deleteRole"></span>
                         </div>
                         <div class="edit">
-                            <input class="role-input" data-bind="value: Name, valueUpdate: 'afterkeydown', enterKey: $root.updateRole, event: { blur: $root.updateRole }"/>
+                            <input class="role-input" data-bind="value: Name, valueUpdate: 'afterkeydown', enterKey: $root.updateRole, event: { blur: stopEditing }"/>
                         </div>
                     </div>
                 </li>

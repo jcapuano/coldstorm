@@ -48,4 +48,9 @@ cai.HubClient = function() {
     	self.roleViewModel.roleDeleted(id);
     }
     
+    now.onError = function(e) {
+    	var msg = e.body;
+    	app.setError(msg);
+    }
+    
 };

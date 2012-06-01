@@ -55,19 +55,22 @@ var app = null;
 var hub = null;
 
 $(document).ready(function(){
-	cai.log("Initializing the Application");
-	app = new cai.Application();
-	app.init();
+    
+    cai.log("Initializing the Application");
+    app = new cai.Application();
+    app.init();
+    
+    now.ready(function() {
+		cai.log("Now is ready");
+	    
+		cai.log("Initializing the Hub");
+		hub = new cai.HubClient();
+	    hub.init();
+	    
+		cai.log("Refreshing views");
+	    app.connectViews();
+		app.refreshViews();
+	});
 });
 
-now.ready(function() {
-	cai.log("Now is ready");
-    
-	cai.log("Initializing the Hub");
-	hub = new cai.HubClient();
-    hub.init();
-    
-	cai.log("Refreshing views");
-    app.connectViews();
-	app.refreshViews();
-});
+

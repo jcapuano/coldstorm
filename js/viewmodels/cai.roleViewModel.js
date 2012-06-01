@@ -1,12 +1,12 @@
 var cai = cai || {};  
 
-cai.RoleViewModel = function(role) {
+cai.RoleViewModel = function(id, name, description, active) {
 	var self = this;
     
-    self.Id = role.Id;
-    self.Name = ko.observable(role.Name);
-    self.Description = ko.observable(role.Description);
-    self.Active = ko.observable(role.Active);
+    self.Id = id;
+    self.Name = ko.observable(name);
+    self.Description = ko.observable(description);
+    self.Active = ko.observable(active);
     self.editing = ko.observable(false);
     
     self.edit = function() {  
@@ -18,15 +18,19 @@ cai.RoleViewModel = function(role) {
 	}
 };
 
-cai.RolesViewModel = function(roles) {
+cai.RolesViewModel = function() {
 	var self = this;
     
     self.newRole = ko.observable("");
-    self.Roles = ko.observableArray(ko.utils.arrayMap(roles, function(role) {
-            return new cai.RoleViewModel(role);
-        }));
+    self.Roles = ko.observableArray(
+	        	ko.utils.arrayMap([], function(role) {
+	                	return new cai.RoleViewModel(role.Id, role.Name, role.Description, role.Active);
+	                })
+				);
     
 	self.init = function() {
+    
+		cai.log("Initializing the Role View Model");
     
 		ko.bindingHandlers.enterKey = {
 	        init: function(element, valueAccessor, allBindingsAccessor, data) {
@@ -61,23 +65,22 @@ cai.RolesViewModel = function(roles) {
     
     self.setRoles = function(roles) {
     	cai.log("Roles received");
-        self.Roles([]);
-    
+        
+        self.Roles.removeAll();
+        
     	if (roles) {
-        	var rolesarray = $.evalJSON(roles);
-	    	self.Roles(
-	        	ko.utils.arrayMap(rolesarray, function(role) {
-	                	return new cai.RoleViewModel(role);
-	                })
-			);
+        	var rolesarray = (typeof roles == "string") ? $.evalJSON(roles) : roles;
+            for (var i=0; i<rolesarray.length; i++) {
+            	var role = rolesarray[i];
+            	self.Roles.push(new cai.RoleViewModel(role.Id, role.Name, role.Description, role.Active));
+            };
         }
     }
     
     self.roleAdded = function(role) {
     	cai.log("Role added: " + role.Name);
         
-        var id = self.Roles.length + 1;
-        self.Roles.push(new cai.RoleViewModel(role));
+        self.Roles.push(new cai.RoleViewModel(role.Id, role.Name, role.Description, role.Active));
         
         self.newRole("");
     }
@@ -113,12 +116,19 @@ cai.RolesViewModel = function(roles) {
     
     self.addRole = function(e) {
     	try {
+    		cai.log("Adding role");
+        
+        	app.clearError();
+        
 	    	var role = self.newRole();
 	    	if (self.validateRole(role)) {
+            
 	    		// call hub to add role 
-                hub.addRole({Id: -1, Name: role, Description: "", Active: true});
+                var len = 0;//self.Roles().length;
+                var id =  0;//len > 0 ? (self.Roles()[len-1].Id + 1) : 1;
                 
-                app.clearError();
+                hub.addRole({Id: id, Name: role, Description: "", Active: true});
+                
 	        } else {
             	app.setError("Invalid role entered");
 	        }
@@ -129,11 +139,13 @@ cai.RolesViewModel = function(roles) {
     
     self.updateRole = function(role) {
     	try {
+    		cai.log("Updating role");
+        
+        	app.clearError();
+        
 	    	if (self.validateRole(role.Name())) {
 	    		// call hub to update role 
 	        	hub.updateRole({Id: role.Id, Name: role.Name(), Description: role.Description(), Active: role.Active()});
-	        
-                app.clearError();
 	        } else {
             	app.setError("Invalid role entered");
 	        }
@@ -144,11 +156,13 @@ cai.RolesViewModel = function(roles) {
 
     self.deleteRole = function(role) {
     	try {
+    		cai.log("Deleting role");
+        
+        	app.clearError();
+        
 	    	if (self.validateRole(role.Name())) {
 	    		// call hub to remove role 
 	        	hub.deleteRole(role.Id);
-	        
-                app.clearError();
 	        } else {
             	app.setError("Invalid role entered");
 	        }

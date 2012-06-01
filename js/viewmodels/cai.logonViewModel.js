@@ -7,6 +7,7 @@ cai.LogonViewModel = function() {
     self.userPassword = ko.observable("");
     
 	self.init = function() {
+		cai.log("Initializing the Logon View Model");
     }    
     
     //--------------------------------------

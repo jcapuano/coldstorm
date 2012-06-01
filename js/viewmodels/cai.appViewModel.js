@@ -15,6 +15,8 @@ cai.AppViewModel = function(user) {
     
     self.init = function() {
         
+		cai.log("Initializing the Application View Model");
+        
         // use jQuery address for app navigation
         $.address.init(self.addressInit)
         		.change(self.addressChange);
@@ -69,6 +71,8 @@ cai.AppViewModel = function(user) {
         try {
         	self.Error('');
             //self.hideError();
+        
+			cai.log("Updating content to page [" + pageName + "]");
         
 	        var pageID = '#'+pageName;
 	        

@@ -2,8 +2,8 @@ var now = now || {};
 
 now.getRoles = function() {
 	var roles = [
-    	{'roleName': 'admin'},
-    	{'roleName': 'tester'}
+    	{Id: 1, Name: 'admin', Description: 'Administrators', Active: true},
+    	{Id: 2, Name: 'tester', Description: 'Testers', Active: true}
     ];
 	now.setRoles(roles);
 }
@@ -16,6 +16,12 @@ now.updateRole = function(role) {
 	now.roleUpdated(role);
 }
 
-now.deleteRole = function(role) {
-	now.roleDeleted(role);
+now.deleteRole = function(id) {
+	now.roleDeleted(id);
+}
+
+now.ready = function(callback) {
+	setTimeout(function(){
+    	callback();
+	}, 300);
 }
