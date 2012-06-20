@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	
+	<!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	
+	<title>Command Alkon</title>
+	
+	<meta name="title" content=".COMMAND">
+	<meta name="description" content=".COMMAND application architecture prototype">
+	
+	<meta name="google-site-verification" content="">
+	<!-- Speaking of Google, don't forget to set your site up: http://google.com/webmasters -->
+	
+	<meta name="author" content="Command Alkon">
+	<meta name="Copyright" content="Copyright Command Alkon, Inc 2012. All Rights Reserved.">
+
+	<!-- Facebook sharing. http://developers.facebook.com/docs/opengraph/ -->
+    <meta property="og:site_name" content=".COMMAND Prototype" />
+	<meta property="og:title" content=".COMMAND Prototype" />
+    <meta property="og:description" content=".COMMAND - the next generation of Construction Materials Management." />
+    <meta property="og:image" content="" /> <!-- Thumbnail for sharing. Use absolute URL. Minimum 50x50 -->
+	<meta property="og:type" content="" /><!-- http://developers.facebook.com/docs/opengraph/#types -->
+	
+	<!-- Mobile friendly meta data from Mobile HTML5 Boilerplate -->
+	<meta http-equiv="cleartype" content="on">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+
+	<link rel="shortcut icon" href="img/favicon.ico">
+	<link rel="apple-touch-icon" href="img/app-icon.png">
+	<!-- - size: 114x114
+		 - To prevent iOS from applying its styles to the icon name it thusly: apple-touch-icon-precomposed.png
+		 - No transparency -->
+	
+	<!--link rel="stylesheet" href="css/reset.css"-->
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/ui-darkness/jquery-ui-1.8.21.custom.css">
+	<link rel="stylesheet" href="css/jquery.qtip.min.css">
+		
+	<!-- Google is a great source for web fonts -->	
+	<link  href="http://fonts.googleapis.com/css?family=Nunito:700&v1" rel="stylesheet" type="text/css" >
+	
+	<!-- Viewport setting for proper display on devices -->	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="header" class="header">
+			<div class="logo">
+				<div class="command">Command</div>
+				<div style="float:left">&nbsp;</div>
+				<div class="alkon">Alkon</div>
+			</div>
+			<div class="title">
+				<span>Role Maintenance</span>
+			</div>
+			<div class="roles">
+				<span>Role(s): </span><span id="rolesCount" data-bind="text: Roles().length"></span>
+			</div>
+        </div>
+        
+        <div id="content">
+			<div data-bind="template: 'rolesTemplate'"></div>
+		</div>
+        
+        <div id="error">
+			<p id="error-display" class="error-text" data-bind="text: Error, visible: Error().length > 0"></p>
+		</div>
+		
+        <div id="footer">
+			<div id="footer-links">
+				<a href="http://www.commandalkon.com/contact.asp" id="button-contact" target="_blank">Contact</a>
+			</div>
+			<p>Products for the Construction Materials Industry by <a href="http://www.commandalkon.com">Command Alkon, Inc</a></p>
+        </div>
+    </div>
+	
+	<script type="text/html" id="rolesTemplate">
+		<button data-bind="jqueryui: 'button', click: addRole, tooltip: 'Add a new role'">Add Role</button>
+		<table id="rolesTable" class="role-list" >
+		    <thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Active</th>
+					<th></th>
+					<th></th>
+				</tr>
+			</thead>
+	        <tbody data-bind="template: { name: 'roleEntryTemplate', foreach: Roles }">
+		    </tbody>
+		</table>
+		
+		<div id="roleDetail" data-bind="jqDialog: { autoOpen: false, resizable: false, modal: true, title: 'Role' }, template: { name: 'roleDetailTemplate', data: selectedRole}, openDialog: displayDetail"></div>	
+	</script>
+
+	<script id="roleEntryTemplate" type="text/html">
+	    <tr class="roleentry">
+	        <td data-bind="text: Name"></td>
+	        <td data-bind="text: Description"></td>
+	        <td><input type="checkbox" disabled="disabled" data-bind="checked: Active" /></td>
+			<td><img src="img/edit.png" style="border-width:0px;" data-bind="click: $root.editRole, tooltip: 'Edit this role'"/></td>
+			<td><img src="img/delete.png" style="border-width:0px;" data-bind="click: $root.deleteRole, tooltip: 'Delete this role'"/></td>
+	    </tr>
+	</script>
+
+	<script id="roleDetailTemplate" type="text/html">
+		<p data-bind="visible: IsDelete">
+			<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+			<span>Are you sure you want to delete the selected role?</span>
+		</p>        
+		<p>
+			<label>Name: </label>
+			<input data-bind="value: editName, readOnly: IsDelete"  />
+		</p>        
+		<p>
+			<label>Description: </label>
+			<input data-bind="value: editDescription, readOnly: IsDelete"  />
+		</p>        
+		<p>
+			<label>Active: </label>
+			<input type="checkbox" data-bind="checked: editActive, disable: IsDelete"  />
+		</p>        
+		<button data-bind="jqButton: {label: IsDelete ? 'Confirm' : 'Accept'}, click: $root.accept">Accept</button>
+		<button data-bind="jqButton: {}, click: $root.cancel">Cancel</button>
+	</script>
+	
+	<!-- JAVASCRIPT -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/vendors/jquery-1.7.2.min.js"><\/script>')</script>
+	<!--
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+	<script>window.jQuery || document.write('<script src="js/vendors/jquery-ui.min.js"><\/script>')</script>
+	-->
+	<script src="js/vendors/jquery-ui.min.js"></script>
+	<script src="js/vendors/jquery.tablesorter.min.js"></script>
+	<script src="js/vendors/jquery.json-2.3.min.js"></script>
+	<script src="js/vendors/knockout-2.1.0.js"></script>
+	<script src="js/vendors/knockout-jquery-ui.widgit.js"></script>
+	<script src="js/vendors/jquery.qtip.min.js"></script>
+	<script src="js/vendors/knockout.tooltip.js"></script>
+	<script src="js/vendors/jquery.blockUI.js"></script>
+	
+	<!-- must point to the hub -->
+	<!--
+	<script src="http://12.109.108.80:8181/nowjs/now.js"></script>
+	-->
+	<!--
+	<script src="http://ec2-107-20-35-240.compute-1.amazonaws.com:3000/nowjs/now.js"></script>	
+	-->
+	 
+	<!--
+	-->
+	<script src="js/mocks/cai.MockRoles.js"></script>
+	<script src="js/mocks/cai.MockHubServer.js"></script>
+	
+	<script src="js/cai.hubClient.js"></script>
+	
+	<script src="js/cai.log.js"></script>
+	<script src="js/cai.roleViewModel.js"></script>
+	<script src="js/cai.app.js"></script>
+</body>
+</html>
