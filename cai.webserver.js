@@ -5,7 +5,7 @@ cai.WebServer = function(port, folder) {
     
 	self.Port = port || 8080;
     self.Folder = folder || process.cwd();
-    self.indexHtml = 'index.html';
+    self.defaultHtml = 'main.html';
     
     this.start = function(port, folder) {
     	if (!port) port = self.Port;
@@ -26,7 +26,7 @@ cai.WebServer = function(port, folder) {
 		    
 		    var filePath = request.url;    
 		    if (filePath == '/')        
-            	filePath = '/' + self.indexHtml;             
+            	filePath = '/' + self.defaultHtml;             
             filePath = self.Folder + filePath
 		    var extname = path.extname(filePath);    
 		    var contentType = 'text/html';    

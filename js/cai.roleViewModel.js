@@ -43,7 +43,6 @@ cai.RolesViewModel = function() {
 				);
 	self.dummyRole = new cai.RoleViewModel(-1, "", "", false, false);
     self.selectedRole = ko.observable(self.dummyRole);
-    	//ko.observable();
     self.displayDetail = ko.computed(function() {
     	var role = self.selectedRole();
         if (role && role.Id != -1) {
@@ -128,12 +127,7 @@ cai.RolesViewModel = function() {
 		    }  
 		};
         
-        /*
-		$("#rolesTable").tablesorter({
-			// striping looking
-			widgets: ['zebra']
-		});
-        */
+        $(window).resize(self.onResize);
     }    
     
     //--------------------------------------
@@ -174,15 +168,13 @@ cai.RolesViewModel = function() {
     self.roleUpdated = function(role) {
     	cai.log("Role updated: " + role.Name);
         
-        var foundrole = ko.utils.arrayFilter(self.Roles(), function(r) {
-	            return r.Id === role.Id;
-                });
-		if (foundrole && foundrole.length > 0)
+        var foundrole = self.findrole(role.Id);
+		if (foundrole)
         {
 			// there is a better way to do this, but too lazy for now
-			foundrole[0].Name(role.Name);
-			foundrole[0].Description(role.Description);
-			foundrole[0].Active(role.Active);
+			foundrole.Name(role.Name);
+			foundrole.Description(role.Description);
+			foundrole.Active(role.Active);
         }        
         
         self.stopWait();
@@ -191,12 +183,10 @@ cai.RolesViewModel = function() {
     self.roleDeleted = function(id) {
     	cai.log("Role deleted: " + id);
         
-        var foundrole = ko.utils.arrayFilter(self.Roles(), function(r) {
-	            return r.Id === id;
-                });
-		if (foundrole && foundrole.length > 0)
+        var foundrole = self.findrole(id);
+		if (foundrole)
         {
-        	self.Roles.remove(foundrole[0]);
+        	self.Roles.remove(foundrole);
         }   
         
         self.stopWait();
@@ -205,17 +195,22 @@ cai.RolesViewModel = function() {
     //--------------------------------------
     //  EVENT HANDLERS
     //--------------------------------------
+    self.onResize = function() {
+    	self.resizeGrid();
+	}       
     
     self.addRole = function() {
         self.selectedRole(new cai.RoleViewModel(0, "New Role", "", true, true));
     }
     
-    self.editRole = function(role) {
+    self.editRole = function(roleid) {
+    	var role = self.findrole(roleid);
     	role.IsDelete = false;
         self.selectedRole(role);
     }
     
-    self.deleteRole = function(role) {
+    self.deleteRole = function(roleid) {
+    	var role = self.findrole(roleid);
     	role.IsDelete = true;
         self.selectedRole(role);
     }
@@ -276,15 +271,24 @@ cai.RolesViewModel = function() {
     //--------------------------------------
     //  PRIVATE
     //--------------------------------------
+    self.findrole = function(roleid) {
+        return ko.utils.arrayFirst(self.Roles(), function(role) {
+            return role.Id == roleid;
+        });
+    }
+    
+    self.resizeGrid = function() {
+    	$('#rolesTable').fluidGrid({base:'#content', offset:0});
+    }
     
     self.startGetWait = function() {
     	self.startWait("Retrieving Roles...");
     }
     self.startAddWait = function() {
-    	self.startWait("Adding Roles...");
+    	self.startWait("Adding Role...");
     }
     self.startUpdateWait = function() {
-    	self.startWait("Updating Roles...");
+    	self.startWait("Updating Role...");
     }
     self.startDeleteWait = function() {
     	self.startWait("Deleting Role...");
@@ -302,7 +306,7 @@ cai.RolesViewModel = function() {
     	if (!role || !role.IsValid)
         	return false;
         
-        // check to see if role is duplicate
+        // check to see if role is a duplicate
           
 		return true;
     }

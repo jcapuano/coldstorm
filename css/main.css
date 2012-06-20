@@ -7,6 +7,21 @@ label {
 }
 */
 
+body 
+{
+	 display : block;
+	 margin : 0;
+	 padding : 0;
+	 border: 0;
+	 //background: #000000
+     //background: #F9F2F2;
+     height: 100%;
+     //background: "img/tiling_stripes.gif";
+     //background: url(img/tiling_stripes.gif);
+     //background-color: "#F9F2F2";
+     
+}
+
 /* -------------------------------------------
 		HEADER
 ----------------------------------------------  */
@@ -30,26 +45,27 @@ label {
 
 .header
 {
-        background-color : #000;
-        width : 100%;
-        height : 45px;
+    //background-color: #F9F2F2;
+    //background-color : #000;
+    width : 100%;
+    height : 45px;
 }
 .logo
 {
-        font-family: Lucida Sans;
-        font-size : 2em;
-        font-weight : bold;
-        float : left;
-        width : 40%;
-
+	background-color: #F9F2F2;	
+	font-family: Lucida Sans;
+    font-size : 2em;
+    font-weight : bold;
+    float : left;
+    //width : 40%;
 }
 .command
-{
-    color : #57a1d5;
+{	
+	color : #57a1d5;
     float : inherit;
 }
 .alkon
-{
+{	
 	color : #f03b43;
 	float : inherit;
 }
@@ -63,12 +79,12 @@ label {
 }
 .roles
 {
-        color : #FFFFFF;
-        font-family: Lucida Sans;
-        font-size : 1em;
-        float: right;
-        text-align : center;
-        margin : 5px;
+	color : #FFFFFF;
+    font-family: Lucida Sans;
+    font-size : 1em;
+    float: right;
+    text-align : center;
+    margin : 5px;
 }
 /*.roles {
     color : #FFF;
@@ -81,25 +97,67 @@ label {
 /* -------------------------------------------
 		CONTENT
 ----------------------------------------------  */
-body 
-{
-	 display : block;
-	 margin : 0;
-	 padding : 0;
-	 border: 0;
-	 //background: #000000
-}
-
 #content {
 	padding: 20px 10px;
-	text-align: center;
+	//text-align: center;
 	margin: 0 auto;
-    width: 600px;
+    //width: 600px;
+    //background: #EDE3E3;
+    //background: #F9F2F2;
+    height: 100%;
 }
 
+/*
 #content h1 {
 	font-size: 18px;
 	padding-bottom: 5px;
+}
+*/
+
+/* -------------------------------------------
+		ROLES
+----------------------------------------------  */
+/*
+table {
+	border: 1px solid #666;
+	margin: 20px 0 20px 0 !important;
+    width: 100%;
+}
+
+th, td {
+	padding: 2px 4px 2px 4px !important;
+	text-align: left;
+	vertical-align: top;
+}
+
+th {
+	background-color: #fc0;
+}
+
+th:hover {
+	background-color: #fc7;
+}
+
+tbody tr:nth-child(even) {background: #CCC}
+tbody tr:nth-child(odd) {background: #FFF}
+
+tr  a {
+	color: rgb(102, 102, 102);
+	text-decoration: none;
+}
+tr a:hover {
+	text-decoration: underline;
+}
+*/
+
+#role-list {
+	width: 100%;
+    background: #eee;
+}
+
+#roles-action {
+	width: 80px;
+    //background: #eee;
 }
 
 /* -------------------------------------------
@@ -133,77 +191,4 @@ body
 	padding: 10px;
 }
 
-/* -------------------------------------------
-		ROLES
-----------------------------------------------  */
-table {
-	border: 1px solid #666;
-	margin: 20px 0 20px 0 !important;
-    width: 100%;
-}
-
-th, td {
-	padding: 2px 4px 2px 4px !important;
-	text-align: left;
-	vertical-align: top;
-}
-
-th {
-	background-color: #fc0;
-}
-
-th:hover {
-	background-color: #fc7;
-}
-
-/*tbody tr.odd {
-	background-color: #eee
-}
-tbody tr.even {
-	background-color: #fea
-}*/
-tbody tr:nth-child(even) {background: #CCC}
-tbody tr:nth-child(odd) {background: #FFF}
-
-tr  a {
-	color: rgb(102, 102, 102);
-	text-decoration: none;
-}
-tr a:hover {
-	text-decoration: underline;
-}
-
-
-#role-list {
-	width: 100%;
-    background: #eee;
-}
-
-/*
-#role-list td {
-	padding: 12px 20px 11px 0;
-	position: relative;
-	font-size: 24px;
-	line-height: 1.1em;
-	border-bottom: 1px solid #cccccc;
-}
-#role-list td:after {
-	content: "\0020";
-	display: block;
-	height: 0;
-	clear: both;
-	overflow: hidden;
-	visibility: hidden;
-}
-*/
-
-#roleConfirmDelete { 
-	visibility: hidden; 
-}
-
-/*
-.role-confirm-text { 
-	color : #FFFFFF;
-}
-*/
 
