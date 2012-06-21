@@ -91,7 +91,7 @@
     </div>
 
 	<script type="text/html" id="rolesTemplate">
-		<table id="rolesTable" class="role-list" data-bind="jqGrid: {data: Roles, opts: {datatype: 'local', colModel: [], colNames: [], height: '100%', altRows: true, viewrecords: true}, pager: { target: '#rolesTableNav', rowNum: 10, rowList: [10, 20, 50] }, nav: {refresh:false, add:true,addfunc:addRole, edit:true,editfunc:editRole, del:true,delfunc:deleteRole, view:false,search:true} }" >
+		<table id="rolesTable" class="role-list" data-bind="jqGrid: {data: Roles, rowid: 'Id', opts: {datatype: 'local', colModel: [], colNames: [], height: '100%', altRows: true, viewrecords: true}, pager: { target: '#rolesTableNav', rowNum: 10, rowList: [10, 20, 50] }, nav: {refresh:false, add:true,addfunc:addRole, edit:true,editfunc:editRole, del:true,delfunc:deleteRole, view:false,search:true} }" >
 			<caption>Roles</caption>
 		    <thead>
 				<tr>
@@ -148,18 +148,18 @@
     <script src="js/vendors/grid.locale-en.js" type="text/javascript"></script>
 	<script src="js/vendors/jquery.jqGrid.js" type="text/javascript"></script>
 	<script src="js/vendors/jquery.jgrid.fluid.js" type="text/javascript"></script>
-	<script src="js/vendors/ko.gridBinding.js" type="text/javascript"></script>
+	<script src="js/vendors/ko.jqGridBinding.js" type="text/javascript"></script>
 	
 	<!-- must point to the hub -->
 	<!--
 	<script src="http://12.109.108.80:8181/nowjs/now.js"></script>
 	<script src="http://oh-vdata-s01:8282/nowjs/now.js"></script>
-	<script src="http://ec2-107-20-35-240.compute-1.amazonaws.com:3000/nowjs/now.js"></script>	
 	-->
+	<script src="http://ec2-107-20-35-240.compute-1.amazonaws.com:3000/nowjs/now.js"></script>	
 	 
+	<!--
 	<script src="js/mocks/cai.MockRoles.js"></script>
 	<script src="js/mocks/cai.MockHubServer.js"></script>
-	<!--
 	-->
 	
 	<script src="js/cai.hubClient.js"></script>

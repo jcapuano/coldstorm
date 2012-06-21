@@ -14,6 +14,16 @@ cai.RoleViewModel = function(id, name, description, active, isnew) {
     self.editDescription = ko.observable(description);
     self.editActive = ko.observable(active);
     
+    self.Update = function(name, description, active) {
+    	self.Name(name);
+        self.Description(description);
+        self.Active(active);
+    	
+    	self.editName(name);
+        self.editDescription(description);
+        self.editActive(active);
+    }
+    
     self.IsValid = function() {
     	if (!self.editName() || self.editName().length < 1) {
         	return false;
@@ -57,6 +67,7 @@ cai.RolesViewModel = function() {
         }
         return false;
     });
+    self.bgColors = [];
     
 	self.init = function() {
     
@@ -162,6 +173,9 @@ cai.RolesViewModel = function() {
         
         self.Roles.push(new cai.RoleViewModel(role.Id, role.Name, role.Description, role.Active, false));
         
+        self.setAccepted(role.Id);
+        //self.setPending(role.Id, true);
+        //self.clearPending(role.Id);
         self.stopWait();
     }
     
@@ -169,14 +183,11 @@ cai.RolesViewModel = function() {
     	cai.log("Role updated: " + role.Name);
         
         var foundrole = self.findrole(role.Id);
-		if (foundrole)
-        {
-			// there is a better way to do this, but too lazy for now
-			foundrole.Name(role.Name);
-			foundrole.Description(role.Description);
-			foundrole.Active(role.Active);
-        }        
-        
+		if (foundrole) {
+        	foundrole.Update(role.Name, role.Description, role.Active);
+        }
+        //self.clearPending(role.Id);
+        self.setAccepted(role.Id);
         self.stopWait();
     }
     
@@ -184,11 +195,11 @@ cai.RolesViewModel = function() {
     	cai.log("Role deleted: " + id);
         
         var foundrole = self.findrole(id);
-		if (foundrole)
-        {
+		if (foundrole) {
         	self.Roles.remove(foundrole);
         }   
         
+        //self.clearPending(id);
         self.stopWait();
     }
     
@@ -228,7 +239,7 @@ cai.RolesViewModel = function() {
 		    		// call hub to add role 
                     cai.log("Adding role");
                     
-                    self.startAddWait();
+                    //self.startAddWait();
                     
 	                hub.addRole({Id: role.Id, Name: role.editName(), Description: role.editDescription(), Active: role.editActive()});
 		        }
@@ -237,7 +248,8 @@ cai.RolesViewModel = function() {
                     
                 	cai.log("Deleting role");
                     
-                    self.startDeleteWait();
+                    //self.startDeleteWait();
+                    self.setPending(role.Id);
 			        
                     // call hub to remove role 
                     hub.deleteRole(role.Id);
@@ -246,7 +258,8 @@ cai.RolesViewModel = function() {
 	            	// edit
 		    		cai.log("Updating role");
                     
-                    self.startUpdateWait();
+                    //self.startUpdateWait();
+                    self.setPending(role.Id);
                     
                     // call hub to update role 
 	                hub.updateRole({Id: role.Id, Name: role.editName(), Description: role.editDescription(), Active: role.editActive()});
@@ -301,6 +314,94 @@ cai.RolesViewModel = function() {
     self.stopWait = function() {
         $.unblockUI();
 	}      
+    
+    self.setPending = function(roleid, autoclear) {
+        try {
+        	var tr = $("table[id=rolesTable]>tbody>tr[id=" + roleid + "]");
+        	var bgcolor = tr.find("td").css('background');
+            //var bgcolor = tr.find("td").css('background-color');
+            self.bgColors.push(bgcolor);
+        
+        	var props = {backgroundColor: '#F5F780'};
+            var opts = {duration: 1000};
+        
+        	//tr.find("td").css{backgroundColor: '#F5F780'});
+            tr.find("td").animate(props, opts);
+        }
+        catch (ex) {
+        	cai.log(ex);
+        }
+    }
+    /*
+    self.setPending = function(roleid, autoclear) {
+        try {
+        	var tr = $("table[id=rolesTable]>tbody>tr[id=" + roleid + "]");
+        	var bgcolor = tr.find("td").css('background');
+            //var bgcolor = tr.find("td").css('background-color');
+            if (!autoclear) {
+	            self.bgColors.push(bgcolor);
+			}                
+        
+        	var props = {backgroundColor: '#F5F780'};
+            var opts = autoclear ? {duration: 1000, complete: function() {
+                    //var retprops = {backgroundColor: bgcolor};
+                    var retprops = {background: bgcolor};
+                    var retopts = {duration: 1000};
+            		$(this).animate(retprops, retopts);
+                    }} : {duration: 1000};
+        
+        	//tr.find("td").css{backgroundColor: '#F5F780'});
+            tr.find("td").animate(props, opts);
+        }
+        catch (ex) {
+        	cai.log(ex);
+        }
+    }
+    */
+    self.clearPending = function(roleid) {
+        try {
+        	var bgcolor = self.bgColors.length > 0 ? self.bgColors.pop() : null;
+            if (bgcolor) {
+				   
+				//var props = {backgroundColor: bgcolor};
+				var props = {background: bgcolor};
+                var opts = {duration: 1000};
+                  
+	        	$("table[id=rolesTable]>tbody>tr[id=" + roleid + "]").find("td").animate(props, opts);
+            }
+        }
+        catch (ex) {
+        	cai.log(ex);
+        }
+    }
+    
+    self.setAccepted = function(roleid) {
+        try {
+        	var tr = $("table[id=rolesTable]>tbody>tr[id=" + roleid + "]");
+        	var bgcolor = self.bgColors.length > 0 ? self.bgColors.pop() : null;
+            if (!bgcolor) {
+        		bgcolor = tr.find("td").css('background');
+                //bgcolor = tr.find("td").css('background-color');
+            }
+            
+        	var props = {backgroundColor: '#88ED6D'};
+            var opts = {duration: 1000, 
+            	complete: function() {
+                    //var retprops = {backgroundColor: bgcolor};
+                    var retprops = {background: bgcolor};
+                    var retopts = {duration: 1000};
+            		$(this).animate(retprops, retopts);
+                    }
+			};
+        
+        	//tr.find("td").css{backgroundColor: '##88ED6D'});
+            tr.find("td").animate(props, opts);
+        }
+        catch (ex) {
+        	cai.log(ex);
+        }
+    }
+    
     
     self.validateRole = function(role) {
     	if (!role || !role.IsValid)
